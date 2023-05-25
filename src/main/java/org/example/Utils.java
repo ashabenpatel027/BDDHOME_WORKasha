@@ -1,5 +1,6 @@
 package org.example;
 
+import net.bytebuddy.utility.RandomString;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
@@ -15,6 +16,7 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.Date;
+import java.util.Random;
 
 import static org.example.BasePage.driver;
 
@@ -23,6 +25,9 @@ public class Utils  extends BasePage {
 
     public static void clickOnElement(By by) {
         driver.findElement(by).click();
+    }
+    public static String  getCurrentUrl(){
+        return driver.getCurrentUrl();
     }
 
     public static void typeText(By by, String text) {
@@ -106,8 +111,12 @@ public class Utils  extends BasePage {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-}
+        //Created for generating randome string for Unique email address ask to gamita
+   //  public static String randomestring(){
+      //  String generatedString1=RandomStringUtils.randomAlphabetic(5);
+      //  return (generatedString1);
+    //}
+}}
 
 
 

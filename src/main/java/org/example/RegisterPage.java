@@ -32,11 +32,11 @@ import org.openqa.selenium.By;
             //type password
             typeText(_password,loadProp.getProperty("password"));
             //type confirm password
-            typeText(_confirmPassword,loadProp.getProperty("confirmPassword"));
             //click on register submit button
             clickOnElement(_registerSubmitButton);
 
         }
+        //made extra method to run program
         public void enterRegistrationNewDetails() {
             //enter first name
             typeText(_firstName, loadProp.getProperty("firstName"));

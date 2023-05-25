@@ -1,5 +1,5 @@
 Feature: register
-  @register
+
   Scenario: AS a user,I should able to register successfully
   so that ,I can use all user features
     Given  I am on registration page

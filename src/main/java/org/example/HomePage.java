@@ -3,8 +3,10 @@ package org.example;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -19,16 +21,19 @@ public class HomePage  extends  Utils {
     private By _currencySelector = By.cssSelector("select#customerCurrency");
     private By _productPrice = By.cssSelector("div.product-grid div.prices");
     private By _euroCurrency = By.id("price actual-price");
-
+    private By _buildComputer = By.xpath("(//a[@href=\"/build-your-own-computer\"])[2]");
     private By _searchProductButton = By.cssSelector("input#small-searchterms");
     private By _searchNikePrice = By.cssSelector(" div.item-grid h2");//("div.search-results div.prices");
     private By _nopCommerce = By.partialLinkText("nopCommerce new release!");
     private By _detailsButton = By.xpath("(//a[@href=\"/nopcommerce-new-release\"])[2]");
-    private By _buildComputer = By.xpath("(//a[@href=\"/build-your-own-computer\"])[2]");
+
     private By _clickOnFaceBook = By.xpath("//a[@href=\"http://www.facebook.com/nopCommerce\"]");
     //All for face book
     private By _facebookButton = By.linkText("Facebook");
     private By _welcomeMessage = By.cssSelector("div.topic-block-title h2");
+    public String expectedAfterHoverColour = "rgba(74, 178, 241, 1)";
+    public String getExpectedBeforeHoverColour = "rgba(85, 85, 85, 1)";
+
 
     public void clickOnRegisterButton() {
         //to call in main method//click on registerButton
@@ -116,15 +121,49 @@ public class HomePage  extends  Utils {
                 driver.switchTo().window(ChildWindow);
             }
         }
+
     }
 
-    public void veryfiUserShouldSeeWelComeMessage () {
+    public void veryfiUserShouldSeeWelComeMessage() {
         String expectedWelcomeMessage = "Welcome to our store";
         String actualMessage = getTextFromElement(_welcomeMessage);
         System.out.println("get message on Homepage:" + actualMessage);
         //Close URL
         Assert.assertEquals(actualMessage, expectedWelcomeMessage, "Welcome Homepage");
-    }}
+    }
+
+    public void clickOnCategory(String category_name) {
+        clickOnElement(By.linkText(category_name));
+    }
+
+    public void hoverOverCategoryButton(String categoryName) {
+        WebElement element = driver.findElement(By.linkText(categoryName));
+
+        Assert.assertEquals(element.getCssValue("color"), getExpectedBeforeHoverColour);
+        // creating object for an action class
+        Actions action = new Actions(driver);
+        action.moveToElement(element).perform();
+
+        //performing the mouse hover action the target element
+        action.moveToElement(element).perform();
+        Assert.assertEquals(element.getCssValue("color"), expectedAfterHoverColour);
+
+    }
+
+    public void verifySubCategory(String subCategory) {
+        clickOnElement(By.linkText(subCategory));
+    }
+
+    public void verifySubCategoryPage(String page) {
+        Assert.assertTrue(getCurrentUrl().contains(page));
+    }
+
+    public void verifyPageTitle(String page_title) {
+        Assert.assertEquals(getTextFromElement(By.tagName("h1")), page_title);
+    }
+
+}
+
 /*//Fluent wait declaration
   Wait<WebDriver> wait = new FluentWait<>(driver)
             .withTimeout(Duration.ofSeconds(30))
